@@ -39,15 +39,31 @@ class FCFS:
             timeline.append((f"P{process['pid']}", process['burst_time']))
             current_time += process['burst_time']
 
+        # Prepare Gantt chart rows
+        process_row = []
+        time_row = []
+
+        last_completion_time = 0
+
+        for task, duration in timeline:
+            if task == 'Idle':
+                process_row.append('Idle')
+                time_row.append(last_completion_time + duration)
+                last_completion_time += duration
+            else:
+                process_row.append(task)
+                last_completion_time += duration
+                time_row.append(last_completion_time)
+
         # Print Gantt Chart
         print("Gantt Chart:")
-        for task, duration in timeline:
-            print(f"{task}: {'#' * duration} ({duration})")
+        print("\t".join(process_row))
+        print("\t".join(map(str, time_row)))
 
 if __name__ == "__main__":
     processes = [
         {'pid': 1, 'arrival_time': 0, 'burst_time': 4},
-        {'pid': 2, 'arrival_time': 1, 'burst_time': 3},
+        {'pid': 2, 'arrival_time': 6, 'burst_time': 3},
         {'pid': 3, 'arrival_time': 2, 'burst_time': 1},
         {'pid': 4, 'arrival_time': 12, 'burst_time': 2}
     ]
