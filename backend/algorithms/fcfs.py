@@ -7,7 +7,6 @@ class FCFS:
         completion_time = [0] * n
         turnaround_time = [0] * n
         waiting_time = [0] * n
-
         # Sort processes by arrival time
         self.processes.sort(key=lambda x: x['arrival_time'])
         for i in range(n):
@@ -26,10 +25,10 @@ class FCFS:
             self.processes[i]['turnaround_time'] = turnaround_time[i]
             self.processes[i]['waiting_time'] = waiting_time[i]
         return self.processes
+    
     def print_gantt_chart(self):
         timeline = []
         current_time = 0
-
         for process in self.processes:
             if process['arrival_time'] > current_time:
                 idle_time = process['arrival_time'] - current_time
@@ -42,9 +41,7 @@ class FCFS:
         # Prepare Gantt chart rows
         process_row = []
         time_row = []
-
         last_completion_time = 0
-
         for task, duration in timeline:
             if task == 'Idle':
                 process_row.append('Idle')
